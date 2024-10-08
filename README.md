@@ -23,7 +23,7 @@ The FullStackOpen course is focused on modern web development. The course covers
 
 ### Future Parts
 
-- Parts 2 through 9 will be added as I progress through the course.
+- Parts 1 through 13 will be added as I progress through the course.
 
 ## How I Update This README
 

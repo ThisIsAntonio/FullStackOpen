@@ -1,4 +1,4 @@
-# Sequence Diagram for Exercise 0.5
+# Sequence Diagram for Exercise 0.5: Single page app diagram
 
 ```mermaid
 sequenceDiagram

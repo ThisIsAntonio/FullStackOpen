@@ -1,4 +1,4 @@
-# FullStackOpen 2024 - Progress Tracker
+# FullStackOpen 2024 course - Progress Tracker
 
 This repository contains my progress as I work through the [FullStackOpen](https://fullstackopen.com/en) course. I will update this file every day as I complete new exercises.
 

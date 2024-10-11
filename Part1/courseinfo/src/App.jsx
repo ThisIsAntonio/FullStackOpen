@@ -1,9 +1,9 @@
 /* Header function to shows the course info */
-const Header = (props) => {
-  console.log(props.course)
+const Header = ({course}) => {
+  console.log(course.name)
   return (
     <div>
-      <p>{props.course}</p>
+      <p>{course.name}</p>
     </div>
   )
 }
@@ -29,7 +29,6 @@ const Content = ({parts}) => {
   )
 }
 
-
 /* Total function to calculate the sum of each exercise */
 const Total = ({parts}) => {
   console.log(parts[0].exercises + parts[1].exercises + parts[2].exercises)
@@ -43,17 +42,19 @@ const Total = ({parts}) => {
 /* Main Function */
 const App = () => {
   // Def const
-  const course = 'Half Stack application development'
-  const parts = [
-    { name: 'Fundamentals of React', exercises: 10 },
-    { name: 'Using props to pass data', exercises:7 },
-    { name: 'State of a component', exercises: 14 }
-  ]
+  const course = {
+    name: 'Half Stack application development',
+    parts: [
+      { name: 'Fundamentals of React', exercises: 10 },
+      { name: 'Using props to pass data', exercises:7 },
+      { name: 'State of a component', exercises: 14 }
+    ]
+  }
   return (
     <div>
       <Header course = {course} />
-      <Content parts = {parts} />
-      <Total parts = {parts} />
+      <Content parts = {course.parts} />
+      <Total parts = {course.parts} />
     </div>
   )
 }

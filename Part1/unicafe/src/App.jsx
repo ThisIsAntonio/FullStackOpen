@@ -13,9 +13,12 @@ const Statistics = ({text, value}) => <li>{text}: {value}</li>
 // Function to calculate average and positive values and shows the list of each
 const Statistic = ({good, neutral, bad}) => {
   console.log('Good:' + good + ', Neutral' + neutral + ', Bad:' + bad)
-    const total = good + neutral + bad
-    const average = total === 0 ? 0 : (good - bad) / total
-    const positive = total === 0 ? 0 : (good * 100 ) / total
+  const total = good + neutral + bad
+  const average = total === 0 ? 0 : (good - bad) / total
+  const positive = total === 0 ? 0 : (good * 100 ) / total
+  if (total === 0) {
+    return <p>No feedback given</p>
+  }
 
   return (
     <ul>

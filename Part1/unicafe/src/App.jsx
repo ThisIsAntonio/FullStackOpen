@@ -8,7 +8,7 @@ const Title = ({value}) => <h1>{value}</h1>
 const Button = ({handleClick,text}) => <button onClick={handleClick}>{text}</button>
 
   // Function to create a list
-const Statistics = ({text, value}) => <li>{text}: {value}</li>
+const StatisticsLine = ({text, value}) => <li>{text}: {value}</li>
 
 // Function to calculate average and positive values and shows the list of each
 const Statistic = ({good, neutral, bad}) => {
@@ -22,12 +22,12 @@ const Statistic = ({good, neutral, bad}) => {
 
   return (
     <ul>
-      <Statistics text="Good" value={good} />
-      <Statistics text="Neutral" value={neutral} />
-      <Statistics text="Bad" value={bad} />
-      <Statistics text="Total" value={total} />
-      <Statistics text="Average" value={average} />
-      <Statistics text="Positive" value={`${positive} %`} />
+      <StatisticsLine text="Good" value={good} />
+      <StatisticsLine text="Neutral" value={neutral} />
+      <StatisticsLine text="Bad" value={bad} />
+      <StatisticsLine text="Total" value={total} />
+      <StatisticsLine text="Average" value={average} />
+      <StatisticsLine text="Positive" value={`${positive} %`} />
     </ul>
   )
 }

@@ -1,40 +1,44 @@
 import React from 'react'
 import { useState } from 'react'
 
-  const Title = (props) => {
-    return (
-      <h1>{props.value}</h1>
-    )
+// Function to shows the title
+const Title = ({value}) => <h1>{value}</h1> 
+
+// Function to create a button
+const Button = ({handleClick,text}) => <button onClick={handleClick}>{text}</button>
+
+  // Function to create a list
+const Statistics = ({text, value}) => <li>{text}: {value}</li>
+
+// Function to calculate average and positive values and shows the list of each
+const Statistic = ({good, neutral, bad}) => {
+  console.log('Good:' + good + ', Neutral' + neutral + ', Bad:' + bad)
+    const total = good + neutral + bad
+    const average = total === 0 ? 0 : (good - bad) / total
+    const positive = total === 0 ? 0 : (good * 100 ) / total
+  if (total === 0) {
+    return <p>No feedback given</p>
   }
-  const Button = (props) => (
-    <button onClick={props.handleClick}>
-      {props.text}
-    </button>
-  )
-
-const Statistic = (props) => {
-  console.log(props)
-    const total = props.good + props.neutral + props.bad
-    const average = total === 0 ? 0 : (props.good - props.bad) / total
-    const positive = total === 0 ? 0 : (props.good * 100 ) / total
-
   return (
     <ul>
-      <li>Good: {props.good} </li>
-      <li>Neutral: {props.neutral} </li>
-      <li>Bad: {props.bad}</li>
-      <li>Averange:{average}</li>
-      <li>Positive: {positive} %</li>
+      <Statistics text="Good" value={good} />
+      <Statistics text="Neutral" value={neutral} />
+      <Statistics text="Bad" value={bad} />
+      <Statistics text="Total" value={total} />
+      <Statistics text="Average" value={average} />
+      <Statistics text="Positive" value={`${positive} %`} />
     </ul>
   )
 }
 
+
+// Main Function
 const App = () => {
-  // guarda los clics de cada botón en su propio estado
+  // Save the click of each state
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
-  const values = [good, neutral, bad]
+
   return (
     <div>
       <Title value='Give Feedback'/>

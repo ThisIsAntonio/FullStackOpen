@@ -48,9 +48,13 @@ const App = () => {
       <Button handleClick={handleVote} text='Vote'/>
       <Button handleClick={() => {setSelected(Math.floor(Math.random() * 7)+1)}} text='Next Anecdote'/>
       <br></br>
-      <Title title='Anecdote with most votes'/>
-      <Div info={anecdotes[mostVotedAnecdote]} />
-      <Div info={`has ${points[mostVotedAnecdote] || 0} votes`} />
+      {Math.max(...points) > 0 && (
+        <>
+          <Title title='Anecdote with most votes'/>
+          <Div info={anecdotes[mostVotedAnecdote]} />
+          <Div info={`has ${points[mostVotedAnecdote] || 0} votes`} />
+        </>
+      )}
     </div>
   )
 }

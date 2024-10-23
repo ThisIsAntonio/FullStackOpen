@@ -19,7 +19,21 @@ The FullStackOpen course is focused on modern web development. The course covers
 
 ### Part 1: Introduction to React
 
-- soon
+- [x] **1.1: Course Info, Step 1** - Set up a React application that displays course information.
+- [x] **1.2: Course Info, Step 2** - Refactored the code to use separate components for course header, content, and total.
+- [x] **1.3: Course Info, Step 3** - Continued refactoring the code, breaking down the course content into individual parts.
+- [x] **1.4: Course Info, Step 4** - Refactored the application to use arrays and passed array data via props.
+- [x] **1.5: Course Info, Step 5** - Completed the Course Info application by calculating the total number of exercises using the array method `.reduce()`.
+- [x] **1.6: Unicafe, Step 1** - Set up state using React's `useState` hook for tracking feedback (good, neutral, bad).
+- [x] **1.7: Unicafe, Step 2** - Expanded the Unicafe application to display the total count of feedbacks.
+- [x] **1.8: Unicafe, Step 3** - Calculated the average score and percentage of positive feedback in the Unicafe application.
+- [x] **1.9: Unicafe, Step 4** - Displayed the feedback statistics in a more structured way.
+- [x] **1.10: Unicafe, Step 5** - Refactored the feedback buttons and statistics into separate components.
+- [x] **1.11: Unicafe, Step 6** - Changed the feedback statistics display into a table format.
+- [x] **1.12: Anecdotes, Step 1** - Created a React app to display random anecdotes from a predefined list.
+- [x] **1.13: Anecdotes, Step 2** - Added a voting system to the Anecdotes app where each anecdote can be voted on.
+- [x] **1.14: Anecdotes, Step 3** - Displayed the anecdote with the highest vote count in a separate section.
+
 
 ### Future Parts
 

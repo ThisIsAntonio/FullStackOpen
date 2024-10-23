@@ -1,11 +1,19 @@
 import React from 'react';
 import { useState } from 'react'
 
+// Function to handle title
+const Title = ({title}) => <h1>{title}</h1>
+
+// Function to handle info div
 const Div = ({info}) => <div>{info}</div>
 
+// Function to handle buttons
 const Button = ({handleClick, text}) => <button onClick={handleClick}> {text}</button>
 
+
+// Main Function
 const App = () => {
+  //Define variables
   const anecdotes = [
     'If it hurts, do it more often.',
     'Adding manpower to a late software project makes it later!',
@@ -18,23 +26,31 @@ const App = () => {
   ]
 
   const [selected, setSelected] = useState(0)
-  const [points, setPoints] = useState({})
+  const [points, setPoints] = useState(new Array(anecdotes.length).fill(0))
 
+  // Function to handle the votes
   const handleVote = () => {
-    const copy = {...points}
-    if(!copy[anecdotes[selected]]){
-      copy[anecdotes[selected]] = 0
-    }
-    copy[anecdotes[selected]] += 1
+    const copy = [...points]
+    copy[selected] += 1
     setPoints(copy)
   }
 
+  // Check the max points from the array
+  const mostVotedAnecdote = points.indexOf(Math.max(...points))
+  console.log(mostVotedAnecdote)
+
+  // Main Return
   return (
     <div>
+      <Title title='Anecdote of the day'/>
       <Div info={anecdotes[selected]}/>
-      <Div info={`has ${points[anecdotes[selected]] || 0} votes`}/>
+      <Div info={`has ${points[selected] || 0} votes`}/>
       <Button handleClick={handleVote} text='Vote'/>
       <Button handleClick={() => {setSelected(Math.floor(Math.random() * 7)+1)}} text='Next Anecdote'/>
+      <br></br>
+      <Title title='Anecdote with most votes'/>
+      <Div info={anecdotes[mostVotedAnecdote]} />
+      <Div info={`has ${points[mostVotedAnecdote] || 0} votes`} />
     </div>
   )
 }

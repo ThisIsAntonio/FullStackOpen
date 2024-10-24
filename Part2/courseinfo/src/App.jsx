@@ -1,8 +1,16 @@
 /* Header function to shows the course info */
-const Header = ({course}) => {
-  console.log(course.name)
+const Header = ({title}) => {
+  console.log(title)
   return (
-      <h1>{course.name}</h1>
+      <h1>{title}</h1>
+  )
+}
+
+/* Subtitle function to shows the course name */
+const Subtitle = ({name}) => {
+  console.log(name)
+  return(
+    <h2>{name}</h2>
   )
 }
 
@@ -19,10 +27,23 @@ const Part = ({name, exercises}) => {
 const Content = ({parts}) => {
   console.log(parts)
   return (
+    // Using map to show the list of exercises
     <div>
       { parts.map((part, index) => (
         <Part key={index} name={part.name} exercises={part.exercises} />
       ))}
+    </div>
+  )
+}
+
+/* Course component to handle and display a single course */
+const Course = ({course}) => {
+  console.log(course)
+  return ( 
+    <div>
+      <Subtitle name={course.name} />
+      <Content parts={course.parts} />
+      <Total parts={course.parts} />
     </div>
   )
 }
@@ -40,43 +61,67 @@ const Total = ({parts}) => {
   )
 }
 
-/* Course function to show the course info */
-const Course = ({course}) => {
+/* Courses component to handle and display multiple courses */
+const Courses = ({ courses }) => {
+  console.log(courses)
   return (
     <div>
-      <Header course = {course} />
-      <Content parts = {course.parts} />
-      <Total parts = {course.parts} />
+      <Header title={courses[0].name} />
+      {courses.map((course) => (
+        <Course key={course.id} course={course} />
+      ))}
     </div>
-  )
+  );
 }
 
 /* Main Function */
 const App = () => {
   // Def const
-  const course = {
-    id: 1,
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10,
-        id: 1
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7,
-        id: 2
-      },
-      {
-        name: 'State of a component',
-        exercises: 14,
-        id: 3
-      }
-    ]
-    
-  }
-  return <Course course={course} />
+  const courses = [
+    {
+      name: 'Half Stack application development',
+      id: 1,
+      parts: [
+        {
+          name: 'Fundamentals of React',
+          exercises: 10,
+          id: 1
+        },
+        {
+          name: 'Using props to pass data',
+          exercises: 7,
+          id: 2
+        },
+        {
+          name: 'State of a component',
+          exercises: 14,
+          id: 3
+        },
+        {
+          name: 'Redux',
+          exercises: 11,
+          id: 4
+        }
+      ]
+    }, 
+    {
+      name: 'Node.js',
+      id: 2,
+      parts: [
+        {
+          name: 'Routing',
+          exercises: 3,
+          id: 1
+        },
+        {
+          name: 'Middlewares',
+          exercises: 7,
+          id: 2
+        }
+      ]
+    }
+  ]
+  return <Courses courses={courses} />
 }
 
 export default App

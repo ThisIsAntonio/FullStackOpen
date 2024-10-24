@@ -29,9 +29,14 @@ const Content = ({parts}) => {
 
 /* Total function to calculate the sum of each exercise */
 const Total = ({parts}) => {
-  console.log(parts[0].exercises + parts[1].exercises + parts[2].exercises)
-  return(
-      <h3>Number of exercises {parts[0].exercises + parts[1].exercises + parts[2].exercises }</h3>
+  // Using reduce to calculate the total sum of exercises
+  const totalExercises = parts.reduce((sum, part) => {
+    console.log('Current sum:', sum, 'Adding exercises from:', part);
+    return sum + part.exercises;
+  }, 0) // Initialize the sum with 0
+
+  return (
+    <h3>Number of exercises {totalExercises}</h3>
   )
 }
 
@@ -69,6 +74,7 @@ const App = () => {
         id: 3
       }
     ]
+    
   }
   return <Course course={course} />
 }

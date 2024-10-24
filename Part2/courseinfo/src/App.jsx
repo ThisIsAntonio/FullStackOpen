@@ -31,7 +31,7 @@ const Content = ({parts}) => {
 const Total = ({parts}) => {
   console.log(parts[0].exercises + parts[1].exercises + parts[2].exercises)
   return(
-      <p>Number of exercises {parts[0].exercises + parts[1].exercises + parts[2].exercises }</p>
+      <h3>Number of exercises {parts[0].exercises + parts[1].exercises + parts[2].exercises }</h3>
   )
 }
 

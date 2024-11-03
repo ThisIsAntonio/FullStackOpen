@@ -4,21 +4,36 @@ import { useState } from 'react'
 const Person = ({ person }) => <li>{person.name} {person.number}</li>
 
 const App = () => {
-  const [persons, setPersons] = useState([{ name: 'Arto Hellas' , id: 1, number: '040-123456' }]) 
+  const [persons, setPersons] = useState([
+    { name: 'Arto Hellas', number: '040-123456', id: 1 },
+    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
+    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
+    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
+  ]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [filter, setFilter] = useState('')
+
+  // Function to handle the filter
+  const handleFilter = (event) => {
+    //console.log(event.target.value)
+    setFilter(event.target.value)
+  }
 
   // Function to handle the name
   const handleNameChange = (event) => {
-    console.log(event.target.value)
+    //console.log(event.target.value)
     setNewName(event.target.value)
   }
 
   // Function to handle the number
   const handleNumberChange = (event) => {
-    console.log(event.target.value)
+    //console.log(event.target.value)
     setNewNumber(event.target.value)
   }
+
+  // Function to filter the person based on the name
+  const personsToShow = filter === '' ? persons : persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
 
   // Function to add the person
   const addPerson = (event) => {
@@ -46,6 +61,14 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <hr/>
+      <h3>Filter</h3>
+      <div>
+        Filter: <input value={filter} onChange={handleFilter}/>
+      </div>
+      <br/>
+      <hr/>
+      <h3>Add a new</h3>
       <form onSubmit={addPerson}>
         <div>
           name: <input value={newName} onChange={handleNameChange}/>
@@ -63,9 +86,9 @@ const App = () => {
       <div>Debug Phone Number: {newNumber}</div>
       <br/>
       <hr/>
-      <h2>Numbers</h2>
+      <h3>Numbers</h3>
       <ul>
-        {persons.map(person => <Person key={person.id} person={person}/>)}
+        {personsToShow.map(person => <Person key={person.id} person={person}/>)}
       </ul>
     </div>
   )

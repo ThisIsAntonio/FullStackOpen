@@ -3,7 +3,7 @@ import { useState } from 'react'
 const App = () => {
   const [persons, setPersons] = useState([{ name: 'Arto Hellas' , id: 1}]) 
   const [newName, setNewName] = useState('')
-  const Person = ({ person }) => {<li>{person.name}</li>}
+  const Person = ({ person }) => <li>{person.name}</li>
 
   const handleNameChange = (event) => {
     console.log(event.target.value)

@@ -1,23 +1,37 @@
 import { useState } from 'react'
 
+// Function to display the person
+const Person = ({ person }) => <li>{person.name}</li>
+
 const App = () => {
   const [persons, setPersons] = useState([{ name: 'Arto Hellas' , id: 1}]) 
   const [newName, setNewName] = useState('')
-  const Person = ({ person }) => <li>{person.name}</li>
 
+  // Function to handle the name
   const handleNameChange = (event) => {
     console.log(event.target.value)
     setNewName(event.target.value)
   }
 
+  // Function to add the person
   const addPerson = (event) => {
     event.preventDefault()
-    const personObject = {
-      name: newName,
-      id: persons.length + 1,
+
+    // Check if the person already exist
+    const nameExist = persons.some(person => person.name === newName)
+    if (nameExist) {
+      // Show the alert if the person already exist
+      alert(`${newName} is already added to phonebook`)
+    } else{
+
+      // Add the person
+      const personObject = {
+        name: newName,
+        id: persons.length + 1,
+      }
+      setPersons(persons.concat(personObject))
+      setNewName('')
     }
-    setPersons(persons.concat(personObject))
-    setNewName('')
   }
 
   return (

@@ -1,7 +1,9 @@
 import { useState } from 'react'
-
-// Function to display the person
-const Person = ({ person }) => <li>{person.name} {person.number}</li>
+import Filter  from './components/Filter'
+import { Title, Subtitle } from './components/Titles'
+import Form from './components/Form'
+import PersonList from './components/PersonList'
+import Debug from './components/Debug'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -15,22 +17,13 @@ const App = () => {
   const [filter, setFilter] = useState('')
 
   // Function to handle the filter
-  const handleFilter = (event) => {
-    //console.log(event.target.value)
-    setFilter(event.target.value)
-  }
+  const handleFilter = (event) =>setFilter(event.target.value)
 
   // Function to handle the name
-  const handleNameChange = (event) => {
-    //console.log(event.target.value)
-    setNewName(event.target.value)
-  }
+  const handleNameChange = (event) => setNewName(event.target.value)
 
   // Function to handle the number
-  const handleNumberChange = (event) => {
-    //console.log(event.target.value)
-    setNewNumber(event.target.value)
-  }
+  const handleNumberChange = (event) => setNewNumber(event.target.value)
 
   // Function to filter the person based on the name
   const personsToShow = filter === '' ? persons : persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
@@ -60,36 +53,20 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <Title value="Phonebook"/>
       <hr/>
-      <h3>Filter</h3>
-      <div>
-        Filter: <input value={filter} onChange={handleFilter}/>
-      </div>
+      <Subtitle value="Search"/>
+      <Filter value={filter} onChange={handleFilter}/>
       <br/>
       <hr/>
-      <h3>Add a new</h3>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input value={newName} onChange={handleNameChange}/>
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handleNumberChange}/>
-        </div>
-        <br/>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <Subtitle value="Add a new"/>
+      <Form onSubmit={addPerson} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange}/>
       <br/>
-      <div>Debug Name: {newName}</div>
-      <div>Debug Phone Number: {newNumber}</div>
+      <Debug newName={newName} newNumber={newNumber} />
       <br/>
       <hr/>
-      <h3>Numbers</h3>
-      <ul>
-        {personsToShow.map(person => <Person key={person.id} person={person}/>)}
-      </ul>
+      <Subtitle value="Numbers"/>
+      <PersonList persons={personsToShow}/>
     </div>
   )
 }

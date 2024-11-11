@@ -41,10 +41,27 @@ const App = () => {
     event.preventDefault()
 
     // Check if the person already exist
-    const nameExist = persons.some(person => person.name === newName)
-      if (nameExist) {
+    const nameExist = persons.find(person => person.name === newName);
+
+    if (nameExist) {
         // Show the alert if the person already exist
-        alert(`${newName} is already added to phonebook`)
+        if (window.confirm(`${newName} is already in the phonebook, replace the old number with the new one?`)) {
+          const updatedPerson = { ...nameExist, number: newNumber };
+          
+          // Llama a la función para actualizar el número en el servidor
+          personService
+            .update(nameExist.id, updatedPerson)
+            .then(returnedPerson => {
+              // Actualiza la lista localmente
+              setPersons(persons.map(person => person.id !== nameExist.id ? person : returnedPerson));
+              setNewName('');
+              setNewNumber('');
+            })
+            .catch(error => {
+              alert(error + `, The person '${nameExist.name}' was already removed from server`);
+              setPersons(persons.filter(p => p.id !== nameExist.id));
+            });
+        }
       } else{
 
         // Add the person
@@ -63,6 +80,7 @@ const App = () => {
     }
   }
 
+  // Function to delete the person
   const deletePersons = id => {
     const person = persons.find(p => p.id === id)
 
@@ -73,7 +91,7 @@ const App = () => {
           setPersons(persons.filter(p => p.id !== id))
         })
         .catch(error => {
-          alert(`The person '${person.name}' was removed from server`)
+          alert(error + `, The person '${person.name}' was removed from server`)
           setPersons(persons.filter(p => p.id !== id))
         })
     }

@@ -14,7 +14,7 @@ const create = newObject => {
 }
 
 
-// Update a new person object (non-implemented on APP yet)
+// Update a new person object
 const update = (id, newObject) => {
     const request = axios.put(`${baseUrl}/${id}`, newObject)
     return request.then(response => response.data)

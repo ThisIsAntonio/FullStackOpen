@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
-import Filter  from './components/Filter'
+import personService from './services/personList'
+import Filter from './components/Filter'
 import { Title, Subtitle } from './components/Titles'
 import Form from './components/Form'
 import PersonList from './components/PersonList'
 import Debug from './components/Debug'
+
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -13,17 +14,14 @@ const App = () => {
   const [filter, setFilter] = useState('')
 
   // Function hook for add json db
-  const hook = () => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
+  useEffect(() => {
+    personService
+      .getAll()
+      .then(initialPersons => {
+        setPersons(initialPersons)
       })
-  }
+  }, [])
 
-  useEffect(hook, [])
   console.log('render', persons.length, 'persons')
 
   // Function to handle the filter
@@ -44,20 +42,25 @@ const App = () => {
 
     // Check if the person already exist
     const nameExist = persons.some(person => person.name === newName)
-    if (nameExist) {
-      // Show the alert if the person already exist
-      alert(`${newName} is already added to phonebook`)
-    } else{
+      if (nameExist) {
+        // Show the alert if the person already exist
+        alert(`${newName} is already added to phonebook`)
+      } else{
 
-      // Add the person
-      const personObject = {
-        name: newName,
-        id: persons.length + 1,
-        number: newNumber
-      }
-      setPersons(persons.concat(personObject))
-      setNewName('')
-      setNewNumber('')
+        // Add the person
+        const personObject = {
+          name: newName,
+          id: persons.length + 1,
+          number: newNumber
+        }
+
+        personService
+          .create(personObject)
+          .then(returnedPerson => {
+            setPersons(persons.concat(returnedPerson))
+            setNewName('')
+            setNewNumber('')
+        })
     }
   }
 

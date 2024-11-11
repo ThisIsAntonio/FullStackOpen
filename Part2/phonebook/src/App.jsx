@@ -50,7 +50,6 @@ const App = () => {
         // Add the person
         const personObject = {
           name: newName,
-          id: persons.length + 1,
           number: newNumber
         }
 
@@ -60,6 +59,22 @@ const App = () => {
             setPersons(persons.concat(returnedPerson))
             setNewName('')
             setNewNumber('')
+        })
+    }
+  }
+
+  const deletePersons = id => {
+    const person = persons.find(p => p.id === id)
+
+    if (window.confirm(`Are you sure you want to delete ${person.name}?`)) {
+      personService
+        .remove(id)
+        .then(() => {
+          setPersons(persons.filter(p => p.id !== id))
+        })
+        .catch(error => {
+          alert(`The person '${person.name}' was removed from server`)
+          setPersons(persons.filter(p => p.id !== id))
         })
     }
   }
@@ -79,7 +94,7 @@ const App = () => {
       <br/>
       <hr/>
       <Subtitle value="Numbers"/>
-      <PersonList persons={personsToShow}/>
+      <PersonList persons={personsToShow} deletePerson={deletePersons}/>
     </div>
   )
 }

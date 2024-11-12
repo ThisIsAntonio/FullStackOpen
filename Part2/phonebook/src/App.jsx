@@ -12,6 +12,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+  const [alertMessage, setAlertMessage] = useState()
 
   // Function hook for add json db
   useEffect(() => {
@@ -41,25 +42,28 @@ const App = () => {
     event.preventDefault()
 
     // Check if the person already exist
-    const nameExist = persons.find(person => person.name === newName);
-
+    const nameExist = persons.find(person => person.name === newName)
+    console.log('addPerson', nameExist)
     if (nameExist) {
         // Show the alert if the person already exist
         if (window.confirm(`${newName} is already in the phonebook, replace the old number with the new one?`)) {
-          const updatedPerson = { ...nameExist, number: newNumber };
+          const updatedPerson = { ...nameExist, number: newNumber }
           
-          // Llama a la función para actualizar el número en el servidor
+          // Call the function to update the person phone number
           personService
             .update(nameExist.id, updatedPerson)
             .then(returnedPerson => {
-              // Actualiza la lista localmente
-              setPersons(persons.map(person => person.id !== nameExist.id ? person : returnedPerson));
-              setNewName('');
-              setNewNumber('');
+              // Update the list of persons
+              setPersons(persons.map(person => person.id !== nameExist.id ? person : returnedPerson))
+              setAlertMessage({message: `Updated the number for ${newName}`, type: 'success'})
+              setNewName('')
+              setNewNumber('')
+              Timing()
             })
             .catch(error => {
-              alert(error + `, The person '${nameExist.name}' was already removed from server`);
-              setPersons(persons.filter(p => p.id !== nameExist.id));
+              setAlertMessage({message: `The person '${nameExist.name}' was already removed from server`, type: 'error'})
+              Timing()
+              setPersons(persons.filter(p => p.id !== nameExist.id))
             });
         }
       } else{
@@ -74,8 +78,10 @@ const App = () => {
           .create(personObject)
           .then(returnedPerson => {
             setPersons(persons.concat(returnedPerson))
+            setAlertMessage({message: `the person '${newName}' was added to Phone list`, type: 'success'})
             setNewName('')
             setNewNumber('')
+            Timing()
         })
     }
   }
@@ -89,17 +95,35 @@ const App = () => {
         .remove(id)
         .then(() => {
           setPersons(persons.filter(p => p.id !== id))
+          setAlertMessage({message: `The person '${person.name}' was successfull removed from server`, type: 'success'})
+          Timing()
         })
         .catch(error => {
-          alert(error + `, The person '${person.name}' was removed from server`)
+          setAlertMessage({message: `The person '${person.name}' was removed from server`, type: 'error'})
+          Timing()
           setPersons(persons.filter(p => p.id !== id))
         })
     }
   }
 
+const Timing = () => {
+  setTimeout(() => setAlertMessage(null), 5000)
+};
+
+  const Notification = ({ alert }) => {
+    if (!alert) return null
+    const notificationStyle = alert.type === 'success' ? 'notification-success' : 'notification-error'
+    return (
+      <div className={notificationStyle}>
+        {alert.message}
+      </div>
+    )
+  }
+
   return (
     <div>
       <Title value="Phonebook"/>
+      <Notification alert={alertMessage}/>
       <hr/>
       <Subtitle value="Search"/>
       <Filter value={filter} onChange={handleFilter}/>

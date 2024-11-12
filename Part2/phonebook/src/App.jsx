@@ -106,10 +106,12 @@ const App = () => {
     }
   }
 
-const Timing = () => {
-  setTimeout(() => setAlertMessage(null), 5000)
-};
+  // Function to set the time to the alert message
+  const Timing = () => {
+    setTimeout(() => setAlertMessage(null), 5000)
+  };
 
+  // Function to set the alert message
   const Notification = ({ alert }) => {
     if (!alert) return null
     const notificationStyle = alert.type === 'success' ? 'notification-success' : 'notification-error'

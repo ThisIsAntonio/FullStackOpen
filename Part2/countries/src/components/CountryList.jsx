@@ -1,9 +1,21 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Subtitle, Subtitle2 } from "./Titles"
 
 
 // Function to show the country Information
 const CountryInfo = ({country}) => {
+    const [weather, setWeather] = useState(null)
+    const api_key = import.meta.env.VITE_WEATHER_API_KEY
+    const capital = country.capital[0]
+
+    // Checking weather API, adding the capital information to show on the country info
+    useEffect(() => {
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${capital}&appid=${api_key}&units=metric`)
+            .then(response => response.json())
+            .then(data => setWeather(data))
+            .catch(error => console.error('Error fetching weather data:', error))
+    }, [capital, api_key])
+
     return (
         <div>
             <Subtitle value={country.name.common} />
@@ -15,7 +27,23 @@ const CountryInfo = ({country}) => {
                     <li key={index}>{language}</li>
                 ))}
             </ul>
+            <br/>
             <img src={country.flags.png} alt={`${country.name.common} flag`} width="200" />
+            <br/>
+            {weather && (
+                <div>
+                    <Subtitle2 value={`Wheater in: ${capital}`} />
+                    <p>Temperature: {weather.main.temp} °C</p>
+                    <p>Wind: {weather.wind.speed} m/s</p>
+                    {weather.weather[0] && (
+                        <img
+                            src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+                            alt={weather.weather[0].description}
+                        />
+                    )}
+                    <p>{weather.weather[0].description}</p>
+                </div>
+            )}
         </div>
     )
 }

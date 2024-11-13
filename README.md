@@ -52,10 +52,10 @@ The FullStackOpen course is focused on modern web development. The course covers
 - [x] **2.14: The Phonebook, Step 9** - Implement error handling for adding duplicate contacts with server communication.
 - [x] **2.15: The Phonebook, Step 10** - Add functionality to delete contacts from the server.
 - [x] **2.16: The Phonebook, Step 11** - Improve the user experience by showing notifications for actions.
-- [x] **2.17*: The Phonebook, Step 12** - Ensure smooth operation when handling data in multiple browsers simultaneously.
-- [x] **2.18*: Country Data, Step 1** - Implement a search feature to view information about different countries.
-- [x] **2.19*: Country Data, Step 2** - Add buttons next to country names to show detailed information on demand.
-- [x] **2.20*: Country Data, Step 3** - Display weather information for the capital of the country selected.
+- [x] **2.17: The Phonebook, Step 12** - Ensure smooth operation when handling data in multiple browsers simultaneously.
+- [x] **2.18: Country Data, Step 1** - Implement a search feature to view information about different countries.
+- [x] **2.19: Country Data, Step 2** - Add buttons next to country names to show detailed information on demand.
+- [x] **2.20: Country Data, Step 3** - Display weather information for the capital of the country selected.
 
 ### Future Parts
 

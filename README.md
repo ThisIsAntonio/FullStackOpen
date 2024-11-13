@@ -34,10 +34,32 @@ The FullStackOpen course is focused on modern web development. The course covers
 - [x] **1.13: Anecdotes, Step 2** - Added a voting system to the Anecdotes app where each anecdote can be voted on.
 - [x] **1.14: Anecdotes, Step 3** - Displayed the anecdote with the highest vote count in a separate section.
 
+### Part 2: Communicating with Server
+
+- [x] **2.1: Course Information, Step 6** - Extend the course information application to handle multiple courses.
+- [x] **2.2: Course Information, Step 7** - Add support for multiple modules from different courses in the same structure.
+- [x] **2.3: Course Information, Step 8** - Create a `Course` component to encapsulate rendering logic.
+- [x] **2.4: Course Information, Step 9** - Refactor the structure by moving the `Course` component to its own file.
+- [x] **2.5: Course Information, Step 10** - Finalize the application by further breaking down components if needed.
+- [x] **2.6: The Phonebook, Step 1** - Set up the initial structure for a phonebook application with a form to add names.
+- [x] **2.7: The Phonebook, Step 2** - Add functionality to prevent duplicate names and show a warning if the name already exists.
+- [x] **2.8: The Phonebook, Step 3** - Extend the phonebook app to handle phone numbers in addition to names.
+- [x] **2.9: The Phonebook, Step 4** - Add a filter for searching names within the phonebook.
+- [x] **2.10: The Phonebook, Step 5** - Separate components for the filter, form, and contact list for cleaner code.
+- [x] **2.11: The Phonebook, Step 6** - Connect the phonebook app to a JSON server for persisting contacts.
+- [x] **2.12: The Phonebook, Step 7** - Retrieve the initial contact data from the server.
+- [x] **2.13: The Phonebook, Step 8** - Add functionality to create new contacts on the server.
+- [x] **2.14: The Phonebook, Step 9** - Implement error handling for adding duplicate contacts with server communication.
+- [x] **2.15: The Phonebook, Step 10** - Add functionality to delete contacts from the server.
+- [x] **2.16: The Phonebook, Step 11** - Improve the user experience by showing notifications for actions.
+- [x] **2.17*: The Phonebook, Step 12** - Ensure smooth operation when handling data in multiple browsers simultaneously.
+- [x] **2.18*: Country Data, Step 1** - Implement a search feature to view information about different countries.
+- [x] **2.19*: Country Data, Step 2** - Add buttons next to country names to show detailed information on demand.
+- [x] **2.20*: Country Data, Step 3** - Display weather information for the capital of the country selected.
 
 ### Future Parts
 
-- Parts 1 through 13 will be added as I progress through the course.
+- Parts 3 and beyond will be added as I continue working through the course.
 
 ## How I Update This README
 

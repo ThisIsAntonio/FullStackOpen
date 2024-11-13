@@ -1,3 +1,4 @@
+// Show the footer
 const Footer = () => {
     return (
         <div className="footerStyle">

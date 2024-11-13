@@ -11,6 +11,7 @@ function App() {
   const [message, setMessage] = useState('')
 
 
+  // Use effect to load all countries
   useEffect(() => {
     countryService.getAll().then(data => {
       setCountries(data)
@@ -21,6 +22,7 @@ function App() {
     })
   }, [])
 
+  // Use effect to filter countries based on the user input
   useEffect(() => {
     if (search.length > 0) {
       const matches = countries.filter(country =>
@@ -48,9 +50,7 @@ function App() {
   }, [search, countries])
 
 
-  const handleSearchChange = (event) => {
-    setSearch(event.target.value)
-  }
+  const handleSearchChange = (event) => setSearch(event.target.value)
 
   return (
     <div className="app-container">

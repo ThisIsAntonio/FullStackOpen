@@ -7,6 +7,7 @@ const getAll = () => {
     return request.then(response => response.data)
 }
 
+// Filter countries based by user input
 const getCountriesByName = (name) => {
     const request = axios.get(`${baseUrl}/name/${name}`);
     return request.then(response => response.data);

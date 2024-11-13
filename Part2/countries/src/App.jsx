@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import countryService from './services/countryServices'
 import CountryList from './components/CountryList'
+import { Title } from './components/Titles'
+import Footer from './components/Footer'
 
 function App() {
   const [search, setSearch] = useState('')
@@ -51,12 +53,13 @@ function App() {
   }
 
   return (
-    <div>
-      <h1>Country Search</h1>
-      <div>
-        Find Countries: <input value={search} onChange={handleSearchChange} />
+    <div className="app-container">
+      <Title value={"Country Search"} />
+      <div className="content">
+        <p>Find Countries:&nbsp;&nbsp;&nbsp;<input value={search} onChange={handleSearchChange} /> </p>
+        <CountryList countries={filteredCountries} message={message} />
       </div> 
-      <CountryList countries={filteredCountries} message={message} />
+      <Footer/>
     </div>
   )
 }

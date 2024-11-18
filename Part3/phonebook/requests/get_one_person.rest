@@ -1,0 +1,5 @@
+### Check if exists 
+GET http://localhost:3001/api/persons/1
+
+### New check
+GET http://localhost:3001/api/persons/5

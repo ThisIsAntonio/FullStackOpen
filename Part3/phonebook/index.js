@@ -25,8 +25,8 @@ persons = [
     },
     { 
         "id": 5,
-        "name": "Mary Poppendieck", 
-        "number": "39-23-6423122"
+        "name": "Marcos Astudillo", 
+        "number": "613-1112233"
     }
 ]
 
@@ -73,6 +73,15 @@ app.delete('/api/persons/:id', (request, response) => {
 // Post new person
 app.post('/api/persons', (request, response) => {
     const body = request.body
+        if (!body.name || !body.number) {
+            return response.status(400).json({
+                error: 'name or number missing'
+            })
+        } else if (persons.find(person => person.name === body.name)) {
+            return response.status(400).json({
+                error: 'name must be unique'
+            })
+        }
 
     const person = {
         name: body.name,

@@ -29,6 +29,17 @@ app.get('/', (request, response) => {
     response.send('<h1>Persons API</h1>')
 })
 
+// Showing info about the current phonebook and datetime of the requested
+app.get('/info', (request, response) => {
+    const date = new Date()
+    response.send(`
+        </br>
+        <p>Phonebook has info for ${persons.length} people</p>
+        <p>${date}</p>`)
+})
+
+
+// Showing list of people
 app.get('/api/persons', (request, response) => {
     response.json(persons)
 })

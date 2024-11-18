@@ -3,8 +3,23 @@ const morgan = require('morgan')
 const app = express()
 
 app.use(express.json())
+
+// Register tokens for Morgan
+morgan.token('body', (request) => {
+    if (request.method === 'POST') {
+        return JSON.stringify(request.body)
+    }
+    return ''
+})
+
+
+// Use morgan 'tiny' token
 app.use(morgan('tiny'))
 
+// Use personalized morgan token
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
+
+// Persons MAP
 persons = [
     { 
         "id": 1,

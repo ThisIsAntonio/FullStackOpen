@@ -84,6 +84,7 @@ app.post('/api/persons', (request, response) => {
     response.json(person)
 })
 
+// create a new random ID
 const generateId = () => {
     return Math.floor(Math.random() * 1000000000)
 }

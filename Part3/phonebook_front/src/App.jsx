@@ -5,6 +5,7 @@ import { Title, Subtitle } from './components/Titles'
 import Form from './components/Form'
 import PersonList from './components/PersonList'
 import Debug from './components/Debug'
+import Footer from './components/Footer'
 
 
 const App = () => {
@@ -62,6 +63,7 @@ const App = () => {
             })
             .catch(error => {
               setAlertMessage({message: `The person '${nameExist.name}' was already removed from server`, type: 'error'})
+              console.log('error', error)
               Timing()
               setPersons(persons.filter(p => p.id !== nameExist.id))
             });
@@ -100,6 +102,7 @@ const App = () => {
         })
         .catch(error => {
           setAlertMessage({message: `The person '${person.name}' was removed from server`, type: 'error'})
+          console.log('error', error)
           Timing()
           setPersons(persons.filter(p => p.id !== id))
         })
@@ -139,6 +142,7 @@ const App = () => {
       <hr/>
       <Subtitle value="Numbers"/>
       <PersonList persons={personsToShow} deletePerson={deletePersons}/>
+      <Footer />
     </div>
   )
 }

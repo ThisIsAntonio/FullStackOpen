@@ -2,7 +2,7 @@ const express = require('express')
 const morgan = require('morgan')
 const app = express()
 
-app.use(express.json())
+
 
 // Register tokens for Morgan
 morgan.token('body', (request) => {
@@ -12,6 +12,11 @@ morgan.token('body', (request) => {
     return ''
 })
 
+// MIDDLEWARE
+
+app.use(express.json())
+
+app.use(express.static('dist'))
 
 // Use morgan 'tiny' token
 app.use(morgan('tiny'))

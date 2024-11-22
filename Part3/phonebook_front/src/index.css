@@ -27,3 +27,13 @@ h3 {
     padding: 10px;
     margin-bottom: 10px;
 }
+
+.footerStyle {
+    color: green;
+    font-style: italic;
+    font-size: 13;
+    text-align: center;
+    padding: 20px;
+    background-color: #f1f1f1;
+    position: relative;
+}

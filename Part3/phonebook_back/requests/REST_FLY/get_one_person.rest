@@ -1,0 +1,5 @@
+### Check if exists 
+GET https://phonebook-backend-2024-mac.fly.dev/api/persons/1
+
+### New check
+GET https://phonebook-backend-2024-mac.fly.dev/api/persons/5

@@ -1,0 +1,7 @@
+POST https://phonebook-backend-2024-mac.fly.dev/api/persons/
+Content-Type: application/json
+
+{
+    "name": "Marco Astudillo",
+    "number": "613-1112233"
+}

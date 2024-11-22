@@ -1,0 +1,29 @@
+h2 {
+    color: darkgreen;
+    font-style: italic;
+}
+
+h3 {
+    color: green;
+    font-style: italic;
+}
+
+.notification-error {
+    color: red;
+    background: lightgrey;
+    font-size: 20px;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.notification-success {
+    color: rgb(56, 86, 10);
+    background: lightgrey;
+    font-size: 20px;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}

@@ -68,38 +68,66 @@ app.get('/api/persons/:id', (request, response, next) => {
 
 // Post new person
 app.post('/api/persons', (request, response, next) => {
-    const body = request.body
-    const personFind = Persons.find( { name: body.name } )
+    const {name, number} = request.body
 
-    if (!body.name || !body.number) {
+    if (!name || !number) {
         return response.status(400).json({
                 error: 'name or number missing'
         })
     }
-    // } else if (persons.find(person => person.name === body.name)) {
-    //     return response.status(400).json({
-    //         error: 'name must be unique'
-    //     })
-    // }
-    const person = new Persons({
-        name: body.name,
-        number: body.number
-    })
+    Persons.findOne({ name })
+    .then(existingPerson => {
+        if (existingPerson) {
+            return response.status(400).json({
+                error: 'name must be unique'
+            })
+        }
 
-    person.save()
-        .then(savedPerson => {
-            response.json(savedPerson)
+        const person = new Persons({
+            name: name,
+            number: number
         })
-        .catch(err => next(err))
+
+        person.save()
+            .then(savedPerson => {
+                response.json(savedPerson)
+            })
+            .catch(err => next(err))
+    })
+    .catch(err => next(err))
 })
 
-// Temporary handler for PUT requests
+// PUT request
 app.put('/api/persons/:id', (request, response, next) => {
-    console.log('PUT request received')
-    console.log('ID:', request.params.id)
-    console.log('Body:', request.body)
-    console.log('PUT method not implemented yet')
-    response.status(501).json({ error: 'PUT method not implemented yet' })
+    const { name, number } = request.body
+
+    if (!name || !number) {
+        return response.status(400).json({
+                error: 'name or number missing'
+        })
+    }
+
+    Persons.findOne({ name, number })
+        .then(existingPerson => {
+            if (existingPerson) {
+                return response.status(400).json({
+                    error: `The person "${name}" already has the number "${number}" associated.`
+                })
+            }
+
+            const person = {
+                name: name,
+                number: number
+            }
+
+            Persons.findByIdAndUpdate(request.params.id, person, { new: true })
+                .then(updatedPerson => {
+                    response.json(updatedPerson)
+                })
+                .catch(err => next(err))
+        })
+        .catch(err => next(err))
+
 })
 
 // Remove one person

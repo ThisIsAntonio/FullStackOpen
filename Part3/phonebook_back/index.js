@@ -4,8 +4,7 @@ const morgan = require('morgan')
 const cors = require('cors')
 const Persons = require('./models/phonebook')
 const app = express()
-
-
+const mongoose = require('mongoose')
 
 // Register tokens for Morgan
 morgan.token('body', (request) => {
@@ -35,6 +34,13 @@ app.use(express.static('dist'))
 
 // Use morgan 'tiny' token
 app.use(morgan('tiny'))
+
+// Request logger middleware
+app.use(requestLogger)
+
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: 'unknown endpoint' })
+}
 
 // Use personalized morgan token
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
@@ -78,10 +84,9 @@ app.get('/info', (request, response) => {
     const date = new Date()
     response.send(`
         </br>
-        <p>Phonebook has info for ${persons.length} people</p>
+        <p>Phonebook has info for ${Persons.length} people</p>
         <p>${date}</p>`)
 })
-
 
 // REST API Persons
 
@@ -97,13 +102,6 @@ app.get('/api/persons/:id', (request, response) => {
     Persons.findById(request.params.id).then(person => {
         response.json(person)
     })
-})
-
-// Remove one person
-app.delete('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    persons = persons.filter(person => person.id !== id)
-    response.status(204).end()
 })
 
 // Post new person
@@ -139,6 +137,16 @@ app.put('/api/persons/:id', (request, response) => {
     console.log('PUT method not implemented yet')
     response.status(501).json({ error: 'PUT method not implemented yet' })
 })
+
+// Remove one person
+app.delete('/api/persons/:id', (request, response) => {
+    Persons.findByIdAndDelete(request.params.id)
+        .then(result => {
+            response.status(204).end()
+        })
+})
+
+app.use(unknownEndpoint)
 
 // Implement later UPDATE method
 const PORT = process.env.PORT || 3001

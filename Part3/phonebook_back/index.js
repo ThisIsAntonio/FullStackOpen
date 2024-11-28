@@ -109,33 +109,38 @@ app.delete('/api/persons/:id', (request, response) => {
 // Post new person
 app.post('/api/persons', (request, response) => {
     const body = request.body
+    const personFind = Persons.find( { name: body.name } )
+
     if (!body.name || !body.number) {
         return response.status(400).json({
                 error: 'name or number missing'
         })
-        } else if (persons.find(person => person.name === body.name)) {
-            return response.status(400).json({
-                error: 'name must be unique'
-            })
-        }
-
-    const person = {
-        name: body.name,
-        number: body.number,
-        id: generateId()
     }
+    // } else if (persons.find(person => person.name === body.name)) {
+    //     return response.status(400).json({
+    //         error: 'name must be unique'
+    //     })
+    // }
+    const person = new Persons({
+        name: body.name,
+        number: body.number
+    })
 
-    persons = persons.concat(person)
-    response.json(person)
+    person.save().then(savedPerson => {
+        response.json(savedPerson)
+    })
 })
 
-// create a new random ID
-const generateId = () => {
-    return Math.floor(Math.random() * 1000000000)
-}
+// Temporary handler for PUT requests
+app.put('/api/persons/:id', (request, response) => {
+    console.log('PUT request received')
+    console.log('ID:', request.params.id)
+    console.log('Body:', request.body)
+    console.log('PUT method not implemented yet')
+    response.status(501).json({ error: 'PUT method not implemented yet' })
+})
 
 // Implement later UPDATE method
-
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)

@@ -40,12 +40,18 @@ app.get('/', (request, response) => {
 })
 
 // Showing info about the current phonebook and datetime of the requested
-app.get('/info', (request, response) => {
+app.get('/info', (request, response, next) => {
     const date = new Date()
-    response.send(`
-        </br>
-        <p>Phonebook has info for ${Persons.length} people</p>
-        <p>${date}</p>`)
+    Persons.countDocuments({})
+    .then((count) => {
+        console.log(`Phonebook has info for ${count} people`)
+        response.send(`
+            </br>
+            <p>Phonebook has info for ${count} people</p>
+            <p>${date}</p>`
+        )
+    })
+    .catch(err => next(err))
 })
 
 // Showing list of people

@@ -1,5 +1,8 @@
+require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
+const cors = require('cors')
+const Persons = require('./models/phonebook')
 const app = express()
 
 
@@ -12,10 +15,22 @@ morgan.token('body', (request) => {
     return ''
 })
 
-// MIDDLEWARE
+const requestLogger = (request, response, next) => {
+    console.log('Method:', request.method)
+    console.log('Path:  ', request.path)
+    console.log('Body:  ', request.body)
+    console.log('---')
+    next()
+}
 
+// MIDDLEWARE
+//Cors
+app.use(cors())
+
+//Body-parser
 app.use(express.json())
 
+//Static files from public folder
 app.use(express.static('dist'))
 
 // Use morgan 'tiny' token
@@ -25,33 +40,33 @@ app.use(morgan('tiny'))
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
 // Persons MAP
-persons = [
-    { 
-        "id": 1,
-        "name": "Arto Hellas", 
-        "number": "040-123456"
-    },
-    { 
-        "id": 2,
-        "name": "Ada Lovelace", 
-        "number": "39-44-5323523"
-    },
-    { 
-        "id": 3,
-        "name": "Dan Abramov", 
-        "number": "12-43-234345"
-    },
-    { 
-        "id": 4,
-        "name": "Mary Poppendieck", 
-        "number": "39-23-6423122"
-    },
-    { 
-        "id": 5,
-        "name": "Marcos Astudillo", 
-        "number": "613-1112233"
-    }
-]
+// persons = [
+//     { 
+//         "id": 1,
+//         "name": "Arto Hellas", 
+//         "number": "040-123456"
+//     },
+//     { 
+//         "id": 2,
+//         "name": "Ada Lovelace", 
+//         "number": "39-44-5323523"
+//     },
+//     { 
+//         "id": 3,
+//         "name": "Dan Abramov", 
+//         "number": "12-43-234345"
+//     },
+//     { 
+//         "id": 4,
+//         "name": "Mary Poppendieck", 
+//         "number": "39-23-6423122"
+//     },
+//     { 
+//         "id": 5,
+//         "name": "Marcos Astudillo", 
+//         "number": "613-1112233"
+//     }
+// ]
 
 // Showing Title
 app.get('/', (request, response) => {
@@ -72,18 +87,16 @@ app.get('/info', (request, response) => {
 
 // Showing list of people
 app.get('/api/persons', (request, response) => {
-    response.json(persons)
+    Persons.find({}).then((persons) => {
+        response.json(persons) 
+    })
 })
 
 // Showing one person
 app.get('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    const person = persons.find(person => person.id === id)
-    if (person) {
+    Persons.findById(request.params.id).then(person => {
         response.json(person)
-    } else {
-        response.status(404).end()
-    }
+    })
 })
 
 // Remove one person

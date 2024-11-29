@@ -113,27 +113,38 @@ app.put('/api/persons/:id', (request, response, next) => {
         })
     }
 
-    Persons.findOne({ name, number })
-        .then(existingPerson => {
-            if (existingPerson) {
-                return response.status(400).json({
-                    error: `The person "${name}" already has the number "${number}" associated.`
+    Persons.findById(request.params.id)
+        .then((person) => {
+            if (!person) {
+                return response.status(404).json({
+                    error: 'person not found',
                 })
             }
 
-            const person = {
-                name: name,
-                number: number
+            // Check if the same data is already present
+            if (person.name === name && person.number === number) {
+                console.log('No update needed: same data')
+                return response.status(400).json({
+                    error: `The person "${name}" already has the number "${number}" associated.`,
+                })
             }
 
-            Persons.findByIdAndUpdate(request.params.id, person, { new: true })
+            const updatedPerson = {
+                name: name,
+                number: number,
+            }
+
+            return Persons.findByIdAndUpdate(request.params.id, updatedPerson, { new: true })
                 .then(updatedPerson => {
+                    if (!updatedPerson) {
+                        return response.status(404).json({
+                            error: 'Failed to update. Person not found.',
+                        })
+                    }
                     response.json(updatedPerson)
                 })
-                .catch(err => next(err))
         })
         .catch(err => next(err))
-
 })
 
 // Remove one person
@@ -158,7 +169,7 @@ const errorHandler = (error, request, response, next) => {
     if (error.name === 'CastError') {
         return response.status(400).send({ error: 'malformatted id' })
     } else if (error.name === 'ValidationError') {
-        return response.status(400).json({ error: error.message });
+        return response.status(400).json({ error: error.message })
     }
 
     next(error)

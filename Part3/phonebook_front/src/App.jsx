@@ -42,48 +42,95 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault()
 
-    // Check if the person already exist
-    const nameExist = persons.find(person => person.name === newName)
-    console.log('addPerson', nameExist)
-    if (nameExist) {
-        // Show the alert if the person already exist
-        if (window.confirm(`${newName} is already in the phonebook, replace the old number with the new one?`)) {
-          const updatedPerson = { ...nameExist, number: newNumber }
-          
-          // Call the function to update the person phone number
-          personService
-            .update(nameExist.id, updatedPerson)
-            .then(returnedPerson => {
-              // Update the list of persons
-              setPersons(persons.map(person => person.id !== nameExist.id ? person : returnedPerson))
-              setAlertMessage({message: `Updated the number for ${newName}`, type: 'success'})
-              setNewName('')
-              setNewNumber('')
-              Timing()
-            })
-            .catch(error => {
-              setAlertMessage({message: `The person '${nameExist.name}' was already removed from server`, type: 'error'})
-              console.log('error', error)
-              Timing()
-              setPersons(persons.filter(p => p.id !== nameExist.id))
-            });
-        }
-      } else{
+    const nameExist = persons.find((person) => person.name === newName)
+    console.log("addPerson", nameExist)
 
-        // Add the person
-        const personObject = {
-          name: newName,
-          number: newNumber
-        }
+    if (nameExist) {
+      if (
+        window.confirm(
+          `${newName} is already in the phonebook, replace the old number with the new one?`
+        )
+      ) {
+        const updatedPerson = { ...nameExist, number: newNumber }
 
         personService
-          .create(personObject)
-          .then(returnedPerson => {
-            setPersons(persons.concat(returnedPerson))
-            setAlertMessage({message: `the person '${newName}' was added to Phone list`, type: 'success'})
-            setNewName('')
-            setNewNumber('')
+          .update(nameExist.id, updatedPerson)
+          .then((returnedPerson) => {
+            setPersons(
+              persons.map((person) =>
+                person.id !== nameExist.id ? person : returnedPerson
+              )
+            )
+            setAlertMessage({
+              message: `Updated the number for ${newName}`,
+              type: "success",
+            })
+            setNewName("")
+            setNewNumber("")
             Timing()
+          })
+          .catch((error) => {
+            if (error.response) {
+              console.log("Error:", error.response.status)
+
+              if (error.response.status === 400) {
+                console.log("Error 400:", error.response.data.error)
+                setAlertMessage({
+                  message: error.response.data.error,
+                  type: "error",
+                })
+              } else if (error.response.status === 404) {
+                setAlertMessage({
+                  message: `The person '${nameExist.name}' was already removed from the server`,
+                  type: "error",
+                })
+                setPersons(persons.filter((p) => p.id !== nameExist.id))
+              } else {
+                setAlertMessage({
+                  message: "An unexpected error occurred.",
+                  type: "error",
+                })
+              }
+            } else {
+              setAlertMessage({
+                message: "Unable to connect to the server.",
+                type: "error",
+              })
+            }
+            Timing()
+          })
+      }
+    } else {
+      const personObject = {
+        name: newName,
+        number: newNumber,
+      }
+
+      personService
+        .create(personObject)
+        .then((returnedPerson) => {
+          setPersons(persons.concat(returnedPerson))
+          setAlertMessage({
+            message: `The person '${newName}' was added to Phonebook`,
+            type: "success",
+          })
+          setNewName("")
+          setNewNumber("")
+          Timing()
+        })
+        .catch((error) => {
+          if (error.response) {
+            setAlertMessage({
+              message: error.response.data.error || "Failed to add the person.",
+              type: "error",
+            })
+          } else {
+            setAlertMessage({
+              message: "Unable to connect to the server.",
+              type: "error",
+            })
+          }
+          Timing()
         })
     }
   }
@@ -112,7 +159,7 @@ const App = () => {
   // Function to set the time to the alert message
   const Timing = () => {
     setTimeout(() => setAlertMessage(null), 5000)
-  };
+  }
 
   // Function to set the alert message
   const Notification = ({ alert }) => {

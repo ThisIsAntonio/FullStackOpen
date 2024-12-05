@@ -103,7 +103,6 @@ app.put('/api/persons/:id', (request, response, next) => {
     const { name, number } = request.body
 
     Persons.findById(request.params.id)
-
         .then((person) => {
             if (!person) {
                 return response.status(404).json({

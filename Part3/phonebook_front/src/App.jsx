@@ -101,6 +101,7 @@ const App = () => {
           })
       }
     } else {
+
       const personObject = {
         name: newName,
         number: newNumber,
@@ -119,9 +120,9 @@ const App = () => {
           Timing()
         })
         .catch((error) => {
-          if (error.response) {
+          if (error.response && error.response.data.error) {
             setAlertMessage({
-              message: error.response.data.error || "Failed to add the person.",
+              message: error.response.data.error,
               type: "error",
             })
           } else {

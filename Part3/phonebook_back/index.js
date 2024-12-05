@@ -76,11 +76,6 @@ app.get('/api/persons/:id', (request, response, next) => {
 app.post('/api/persons', (request, response, next) => {
     const {name, number} = request.body
 
-    if (!name || !number) {
-        return response.status(400).json({
-                error: 'name or number missing'
-        })
-    }
     Persons.findOne({ name })
     .then(existingPerson => {
         if (existingPerson) {
@@ -98,7 +93,7 @@ app.post('/api/persons', (request, response, next) => {
             .then(savedPerson => {
                 response.json(savedPerson)
             })
-            .catch(err => next(err))
+            .catch(error => next(error))
     })
     .catch(err => next(err))
 })
@@ -107,13 +102,8 @@ app.post('/api/persons', (request, response, next) => {
 app.put('/api/persons/:id', (request, response, next) => {
     const { name, number } = request.body
 
-    if (!name || !number) {
-        return response.status(400).json({
-                error: 'name or number missing'
-        })
-    }
-
     Persons.findById(request.params.id)
+
         .then((person) => {
             if (!person) {
                 return response.status(404).json({
@@ -134,7 +124,10 @@ app.put('/api/persons/:id', (request, response, next) => {
                 number: number,
             }
 
-            return Persons.findByIdAndUpdate(request.params.id, updatedPerson, { new: true })
+            return Persons.findByIdAndUpdate(
+                request.params.id,
+                updatedPerson, 
+                { new: true, runValidators: true, context: 'query' })
                 .then(updatedPerson => {
                     if (!updatedPerson) {
                         return response.status(404).json({
@@ -143,6 +136,7 @@ app.put('/api/persons/:id', (request, response, next) => {
                     }
                     response.json(updatedPerson)
                 })
+                .catch((error) => next(error))
         })
         .catch(err => next(err))
 })
@@ -167,13 +161,13 @@ const errorHandler = (error, request, response, next) => {
     console.error(error.message)
 
     if (error.name === 'CastError') {
-        return response.status(400).send({ error: 'malformatted id' })
+        return response.status(400).send({ error: 'Malformatted ID' })
     } else if (error.name === 'ValidationError') {
         return response.status(400).json({ error: error.message })
     }
 
     next(error)
-}
+};
 app.use(errorHandler)
 
 const PORT = process.env.PORT

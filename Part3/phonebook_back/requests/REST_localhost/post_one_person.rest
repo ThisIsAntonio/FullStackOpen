@@ -5,3 +5,21 @@ Content-Type: application/json
     "name": "Marco Astudillo",
     "number": "613-1112233"
 }
+
+###
+
+POST http://localhost:3001/api/persons/
+Content-Type: application/json
+
+{
+    "name": "Lu",
+    "number": "613-1112233"
+}
+
+###
+POST http://localhost:3001/api/persons/
+Content-Type: application/json
+
+{
+
+}

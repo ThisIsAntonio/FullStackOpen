@@ -57,9 +57,34 @@ The FullStackOpen course is focused on modern web development. The course covers
 - [x] **2.19: Country Data, Step 2** - Add buttons next to country names to show detailed information on demand.
 - [x] **2.20: Country Data, Step 3** - Display weather information for the capital of the country selected.
 
+### Part 3: Programming a Server with NodeJS and Express
+
+- [x] **3.1: Phonebook Backend, Step 1** - Implemented a Node.js application that returns a hardcoded list of phonebook entries at the endpoint /api/persons.
+- [x] **3.2: Phonebook Backend, Step 2** - Added an endpoint /info to show the number of entries in the phonebook and the time of the request.
+- [x] **3.3: Phonebook Backend, Step 3** - Implemented functionality to fetch information about a single phonebook entry using its ID.
+- [x] **3.4: Phonebook Backend, Step 4** - Added functionality to delete a phonebook entry via an HTTP DELETE request.
+- [x] **3.5: Phonebook Backend, Step 5** - Expanded the backend to support adding new entries with HTTP POST requests.
+- [x] **3.6: Phonebook Backend, Step 6** - Implemented error handling for creating new entries, such as missing name/number or duplicate names.
+- [x] **3.7: Phonebook Backend, Step 7** - Integrated the morgan middleware for logging HTTP requests in a concise format.
+- [x] **3.8: Phonebook Backend, Step 8** - Configured morgan to log the request body for HTTP POST requests.
+- [x] **3.9: Phonebook Backend, Step 9** - Connected the backend with the phonebook frontend and adjusted the API endpoints.
+- [x] **3.10: Phonebook Backend, Step 10** - Deployed the backend to a cloud hosting service (e.g., Render or Fly.io).
+- [x] **3.11: Full Stack Phonebook Deployment** - Built the frontend for production and served it via the backend.
+- [x] **3.12: Command-Line MongoDB** - Added a script to manage phonebook entries in MongoDB from the command line.
+- [x] **3.13: Phonebook Database, Step 1** - Updated the backend to fetch all phonebook entries from MongoDB.
+- [x] **3.14: Phonebook Database, Step 2** - Modified the backend to save new phonebook entries to MongoDB.
+- [x] **3.15: Phonebook Database, Step 3** - Ensured the deletion of phonebook entries is reflected in MongoDB.
+- [x] **3.16: Phonebook Database, Step 4** - Moved error handling logic to a middleware for better organization.
+- [x] **3.17: Phonebook Database, Step 5** - Added support for updating phone numbers with an HTTP PUT request.
+- [x] **3.18: Phonebook Database, Step 6** - Ensured all routes, including /api/persons/:id and /info, work directly with the database.
+- [x] **3.19: Phonebook Database, Step 7** - Implemented validation for Name and phone numbers to ensure correct length.
+- [x] **3.20: Phonebook Database, Step 8** - Implemented validation for phone numbers to ensure correct formatting.
+- [x] **3.21: Full Stack Production Deployment** - Deployed the full-stack application (backend serving the production frontend) to the cloud.
+- [x] **3.22: Lint Configuration** - Added ESLint to the application and resolved all warnings.
+
 ### Future Parts
 
-- Parts 3 and beyond will be added as I continue working through the course.
+- Parts 4 and beyond will be added as I continue working through the course.
 
 ## How I Update This README
 

@@ -57,7 +57,7 @@ The FullStackOpen course is focused on modern web development. The course covers
 - [x] **2.19: Country Data, Step 2** - Add buttons next to country names to show detailed information on demand.
 - [x] **2.20: Country Data, Step 3** - Display weather information for the capital of the country selected.
 
-### Part 3: Programming a Server with NodeJS and Express
+### Part 3: Programming a Server with NodeJS and Express, deploying application, saving infomation on MongoDB and validating data with ESLint 
 
 - [x] **3.1: Phonebook Backend, Step 1** - Implemented a Node.js application that returns a hardcoded list of phonebook entries at the endpoint /api/persons.
 - [x] **3.2: Phonebook Backend, Step 2** - Added an endpoint /info to show the number of entries in the phonebook and the time of the request.

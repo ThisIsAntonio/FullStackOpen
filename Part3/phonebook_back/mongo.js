@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 
 if (process.argv.length<3) {
-    console.log('give password as argument')
-    process.exit(1)
+  console.log('give password as argument')
+  process.exit(1)
 }
 
 const password = process.argv[2]
@@ -17,44 +17,44 @@ mongoose.set('strictQuery',false)
 mongoose.connect(url)
 
 const phonebookSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        minLength: [3, 'The name must be at least 3 characters long'],
-        required: [true, 'Name is required'],
-    },
-    number: {
-        type: String,
-        minLength: [8, 'The number must be at least 8 characters long'],
-        required: [true, 'Number is required'],
-    },
+  name: {
+    type: String,
+    minLength: [3, 'The name must be at least 3 characters long'],
+    required: [true, 'Name is required'],
+  },
+  number: {
+    type: String,
+    minLength: [8, 'The number must be at least 8 characters long'],
+    required: [true, 'Number is required'],
+  },
 })
 
 const Phonebook = mongoose.model('Phonebook', phonebookSchema)
 
 const phonebook = new Phonebook({
-    name: name,
-    number: number,
+  name: name,
+  number: number,
 })
 
 if ( name && number ) {
-    // Saving the information in mongodb
-    phonebook.save().then(result => {
-        console.log('Person saved on the Phonebook!')
-        console.log('name: ', name)
-        console.log('number: ', number) 
-        mongoose.connection.close()
-    })
+  // Saving the information in mongodb
+  phonebook.save().then(result => {
+    console.log('Person saved on the Phonebook!')
+    console.log('name: ', name)
+    console.log('number: ', number)
+    mongoose.connection.close()
+  })
 } else {
-    // Showing the phonebook list from mongodb
-    console.log('Phonebook:')
-    Phonebook.find({}).then(result => {
-        result.forEach(phonebook => {
-            console.log(`${phonebook.name} ${phonebook.number}`)
-        })
-        
-        if (result.length === 0) {
-            console.log('No notes found')
-        }
-        mongoose.connection.close()
+  // Showing the phonebook list from mongodb
+  console.log('Phonebook:')
+  Phonebook.find({}).then(result => {
+    result.forEach(phonebook => {
+      console.log(`${phonebook.name} ${phonebook.number}`)
     })
+
+    if (result.length === 0) {
+      console.log('No notes found')
+    }
+    mongoose.connection.close()
+  })
 }

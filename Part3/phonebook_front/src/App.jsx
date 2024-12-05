@@ -9,7 +9,7 @@ import Footer from './components/Footer'
 
 
 const App = () => {
-  const [persons, setPersons] = useState([]) 
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
@@ -27,7 +27,7 @@ const App = () => {
   console.log('render', persons.length, 'persons')
 
   // Function to handle the filter
-  const handleFilter = (event) =>setFilter(event.target.value)
+  const handleFilter = (event) => setFilter(event.target.value)
 
   // Function to handle the name
   const handleNameChange = (event) => setNewName(event.target.value)
@@ -43,7 +43,7 @@ const App = () => {
     event.preventDefault()
 
     const nameExist = persons.find((person) => person.name === newName)
-    console.log("addPerson", nameExist)
+    console.log('addPerson', nameExist)
 
     if (nameExist) {
       if (
@@ -63,38 +63,38 @@ const App = () => {
             )
             setAlertMessage({
               message: `Updated the number for ${newName}`,
-              type: "success",
+              type: 'success',
             })
-            setNewName("")
-            setNewNumber("")
+            setNewName('')
+            setNewNumber('')
             Timing()
           })
           .catch((error) => {
             if (error.response) {
-              console.log("Error:", error.response.status)
+              console.log('Error:', error.response.status)
 
               if (error.response.status === 400) {
-                console.log("Error 400:", error.response.data.error)
+                console.log('Error 400:', error.response.data.error)
                 setAlertMessage({
                   message: error.response.data.error,
-                  type: "error",
+                  type: 'error',
                 })
               } else if (error.response.status === 404) {
                 setAlertMessage({
                   message: `The person '${nameExist.name}' was already removed from the server`,
-                  type: "error",
+                  type: 'error',
                 })
                 setPersons(persons.filter((p) => p.id !== nameExist.id))
               } else {
                 setAlertMessage({
-                  message: "An unexpected error occurred.",
-                  type: "error",
+                  message: 'An unexpected error occurred.',
+                  type: 'error',
                 })
               }
             } else {
               setAlertMessage({
-                message: "Unable to connect to the server.",
-                type: "error",
+                message: 'Unable to connect to the server.',
+                type: 'error',
               })
             }
             Timing()
@@ -113,22 +113,22 @@ const App = () => {
           setPersons(persons.concat(returnedPerson))
           setAlertMessage({
             message: `The person '${newName}' was added to Phonebook`,
-            type: "success",
+            type: 'success',
           })
-          setNewName("")
-          setNewNumber("")
+          setNewName('')
+          setNewNumber('')
           Timing()
         })
         .catch((error) => {
           if (error.response && error.response.data.error) {
             setAlertMessage({
               message: error.response.data.error,
-              type: "error",
+              type: 'error',
             })
           } else {
             setAlertMessage({
-              message: "Unable to connect to the server.",
-              type: "error",
+              message: 'Unable to connect to the server.',
+              type: 'error',
             })
           }
           Timing()
@@ -145,11 +145,11 @@ const App = () => {
         .remove(id)
         .then(() => {
           setPersons(persons.filter(p => p.id !== id))
-          setAlertMessage({message: `The person '${person.name}' was successfull removed from server`, type: 'success'})
+          setAlertMessage({ message: `The person '${person.name}' was successfull removed from server`, type: 'success' })
           Timing()
         })
         .catch(error => {
-          setAlertMessage({message: `The person '${person.name}' was removed from server`, type: 'error'})
+          setAlertMessage({ message: `The person '${person.name}' was removed from server`, type: 'error' })
           console.log('error', error)
           Timing()
           setPersons(persons.filter(p => p.id !== id))
